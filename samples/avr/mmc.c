@@ -69,12 +69,6 @@ int power_status (void)		/* Socket power state: 0=off, 1=on */
 static
 void power_on (void)
 {
-	{	/* Remove this block if no socket power control */
-		PORTE &= ~_BV(7);	/* Socket power on (PE7=low) */
-		DDRE |= _BV(7);
-		for (Timer1 = 2; Timer1; );	/* Wait for 20ms */
-	}
-
 	PORTB |= 0b00000101;	/* Configure SCK/MOSI/CS as output */
 	DDRB  |= 0b00000111;
 
@@ -85,16 +79,6 @@ void power_on (void)
 static
 void power_off (void)
 {
-	SPCR = 0;				/* Disable SPI function */
-
-	DDRB  &= ~0b00110111;	/* Set SCK/MOSI/CS as hi-z, INS#/WP as pull-up */
-	PORTB &= ~0b00000111;
-	PORTB |=  0b00110000;
-
-	{	/* Remove this block if no socket power control */
-		PORTE |= _BV(7);		/* Socket power off (PE7=high) */
-		for (Timer1 = 20; Timer1; );	/* Wait for 20ms */
-	}
 }
 
 
