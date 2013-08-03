@@ -53,6 +53,17 @@ BYTE Timer1, Timer2;	/* 100Hz decrement timer */
 static
 BYTE CardType;			/* Card type flags */
 
+ /*-----------------------------------------------------------------------*/
+ /* Receive a byte from MMC via SPI  (Platform dependent)                 */
+ /*-----------------------------------------------------------------------*/
+
+ static
+ BYTE rcvr_spi (void)
+ {
+	 SPDR = 0xFF;
+	 loop_until_bit_is_set(SPSR, SPIF);
+	 return SPDR;
+ }
 
 /*-----------------------------------------------------------------------*/
 /* Power Control  (Platform dependent)                                   */
