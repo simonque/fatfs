@@ -93,6 +93,10 @@ void power_off (void)
 }
 
 
+static int chk_power(void) {
+	return 1;		// Not actually checking power, so always return true.
+}
+
 
 /*-----------------------------------------------------------------------*/
 /* Transmit/Receive data from/to MMC via SPI  (Platform dependent)       */
